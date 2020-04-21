@@ -1,10 +1,5 @@
 #region
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using HearthDb.Enums;
 using HearthMirror;
 using Hearthstone_Deck_Tracker.API;
@@ -23,8 +18,13 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.Toasts;
 using Hearthstone_Deck_Tracker.Windows;
 using HSReplay.LogValidation;
-using static Hearthstone_Deck_Tracker.Enums.GameMode;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using static HearthDb.Enums.GameTag;
+using static Hearthstone_Deck_Tracker.Enums.GameMode;
 
 #endregion
 
@@ -41,7 +41,6 @@ namespace Hearthstone_Deck_Tracker
 		private bool _handledGameEnd;
 		private GameStats _lastGame;
 		private DateTime _lastGameStart;
-
 
 		private bool _showedNoteDialog;
 
@@ -111,7 +110,7 @@ namespace Hearthstone_Deck_Tracker
 
 			if(!_game.IsUsingPremade)
 				_game.DrawnLastGame =
-					new List<Card>(_game.Player.RevealedEntities.Where(x => !x.Info.Created && !x.Info.Stolen && x.Card.Collectible 
+					new List<Card>(_game.Player.RevealedEntities.Where(x => !x.Info.Created && !x.Info.Stolen && x.Card.Collectible
 									&& x.IsPlayableCard).GroupBy(x => x.CardId).Select(x =>
 					{
 						var card = Database.GetCardFromId(x.Key);
@@ -149,7 +148,7 @@ namespace Hearthstone_Deck_Tracker
 					var validationResult = LogValidator.Validate(log);
 					if(validationResult.IsValid)
 						LogUploader.Upload(log, (GameMetaData)_game.MetaData.Clone(), _game.CurrentGameStats).Forget();
-					else 
+					else
 					{
 						Log.Error("Invalid log: " + validationResult.Reason);
 						Influx.OnEndOfGameUploadError(validationResult.Reason);
@@ -317,12 +316,13 @@ namespace Hearthstone_Deck_Tracker
 			{
 				switch(Config.Instance.TurnStartAction)
 				{
-						case HsActionType.Flash:
-							User32.FlashHs();
-							break;
-						case HsActionType.Popup:
-							User32.BringHsToForeground();
-							break;
+					case HsActionType.Flash:
+						User32.FlashHs();
+						break;
+
+					case HsActionType.Popup:
+						User32.BringHsToForeground();
+						break;
 				}
 			}
 			Core.Overlay.TurnCounter.UpdateTurn(turn.Item2);
@@ -347,7 +347,7 @@ namespace Hearthstone_Deck_Tracker
 			_game.InvalidateMatchInfoCache();
 			Reflection.Reinitialize();
 			if(_game.CurrentGameMode == Practice && !_game.IsInMenu && !_handledGameEnd
-				&& _lastGameStartTimestamp  > DateTime.MinValue && timestamp > _lastGameStartTimestamp)
+				&& _lastGameStartTimestamp > DateTime.MinValue && timestamp > _lastGameStartTimestamp)
 				HandleAdventureRestart();
 			_lastGameStartTimestamp = timestamp;
 			if(DateTime.Now - _lastGameStart < new TimeSpan(0, 0, 0, 5)) //game already started
@@ -361,6 +361,7 @@ namespace Hearthstone_Deck_Tracker
 				case HsActionType.Flash:
 					User32.FlashHs();
 					break;
+
 				case HsActionType.Popup:
 					User32.BringHsToForeground();
 					break;
@@ -447,7 +448,7 @@ namespace Hearthstone_Deck_Tracker
 					var playerInfo = wild ? _game.MatchInfo.LocalPlayer.Wild : _game.MatchInfo.LocalPlayer.Standard;
 					var opponentInfo = wild ? _game.MatchInfo.OpposingPlayer.Wild : _game.MatchInfo.OpposingPlayer.Standard;
 					_game.CurrentGameStats.LeagueId = playerInfo.LeagueId ?? 0;
-					if (playerInfo.LeagueId < 5)
+					if(playerInfo.LeagueId < 5)
 					{
 						_game.CurrentGameStats.Rank = wild ? _game.MatchInfo.LocalPlayer.WildRank : _game.MatchInfo.LocalPlayer.StandardRank;
 						_game.CurrentGameStats.OpponentRank = wild ? _game.MatchInfo.OpposingPlayer.WildRank : _game.MatchInfo.OpposingPlayer.StandardRank;
@@ -469,7 +470,7 @@ namespace Hearthstone_Deck_Tracker
 					_game.CurrentGameStats.BrawlWins = _game.BrawlInfo.Wins;
 					_game.CurrentGameStats.BrawlLosses = _game.BrawlInfo.Losses;
 				}
-				else if (_game.CurrentGameMode == Battlegrounds && _game.BattlegroundsRatingInfo != null)
+				else if(_game.CurrentGameMode == Battlegrounds && _game.BattlegroundsRatingInfo != null)
 				{
 					_game.CurrentGameStats.BattlegroundsRating = _game.BattlegroundsRatingInfo.Rating;
 				}
@@ -509,7 +510,7 @@ namespace Hearthstone_Deck_Tracker
 					{
 						if(Config.Instance.AskBeforeDiscardingGame)
 						{
-							var discardDialog = new DiscardGameDialog(_game.CurrentGameStats) {Topmost = true};
+							var discardDialog = new DiscardGameDialog(_game.CurrentGameStats) { Topmost = true };
 							discardDialog.ShowDialog();
 							if(discardDialog.Result == DiscardGameDialogResult.Discard)
 							{
@@ -554,7 +555,7 @@ namespace Hearthstone_Deck_Tracker
 
 					if(Config.Instance.ArenaRewardDialog && (selectedDeck.IsArenaRunCompleted ?? false))
 					{
-						if (selectedDeck.ArenaReward.Packs[0] == ArenaRewardPacks.None)
+						if(selectedDeck.ArenaReward.Packs[0] == ArenaRewardPacks.None)
 							selectedDeck.ArenaReward.Packs[0] = Enum.GetValues(typeof(ArenaRewardPacks)).OfType<ArenaRewardPacks>().Max();
 
 						_arenaRewardDialog = new ArenaRewardDialog(selectedDeck);
@@ -740,12 +741,16 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(_game.CurrentGameType == GameType.GT_BATTLEGROUNDS)
 				HandleBattlegroundsStart();
+			else
+				GameEvents.OnPlayerMulliganStart.Execute();
 		}
 
 		public void HandlePlayerMulliganDone()
 		{
 			if(_game.CurrentGameType == GameType.GT_BATTLEGROUNDS)
 				Core.Overlay.HideBattlegroundsHeroPanel();
+			else
+				GameEvents.OnPlayerMulliganDone.Execute();
 		}
 
 		private async void HandleBattlegroundsStart()
@@ -826,7 +831,6 @@ namespace Hearthstone_Deck_Tracker
 			GameEvents.OnPlayerDraw.Execute(Database.GetCardFromId(cardId));
 		}
 
-
 		public void HandlePlayerMulligan(Entity entity, string cardId)
 		{
 			if(string.IsNullOrEmpty(cardId))
@@ -850,16 +854,18 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 
-			switch (fromZone)
+			switch(fromZone)
 			{
 				case Zone.DECK:
 					_game.Player.SecretPlayedFromDeck(entity, turn);
 					DeckManager.DetectCurrentDeck().Forget();
 					break;
+
 				case Zone.HAND:
 					_game.Player.SecretPlayedFromHand(entity, turn);
 					_game.SecretsManager.HandleCardPlayed(entity);
 					break;
+
 				default:
 					_game.Player.CreateInSecret(entity, turn);
 					return;
@@ -1035,7 +1041,6 @@ namespace Hearthstone_Deck_Tracker
 			GameEvents.OnOpponentPlay.Execute(Database.GetCardFromId(cardId));
 		}
 
-
 		public void HandleOpponentJoust(Entity entity, string cardId, int turn)
 		{
 			_game.Opponent.JoustReveal(entity, turn);
@@ -1087,9 +1092,11 @@ namespace Hearthstone_Deck_Tracker
 				case Zone.DECK:
 					_game.Opponent.SecretPlayedFromDeck(entity, turn);
 					break;
+
 				case Zone.HAND:
 					_game.Opponent.SecretPlayedFromHand(entity, turn);
 					break;
+
 				default:
 					_game.Opponent.CreateInSecret(entity, turn);
 					break;
@@ -1116,7 +1123,6 @@ namespace Hearthstone_Deck_Tracker
 			GameEvents.OnOpponentPlayToHand.Execute(Database.GetCardFromId(cardId));
 		}
 
-
 		public void HandleOpponentPlayToDeck(Entity entity, string cardId, int turn)
 		{
 			_game.Opponent.BoardToDeck(entity, turn);
@@ -1126,7 +1132,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleOpponentSecretTrigger(Entity entity, string cardId, int turn, int otherId)
 		{
-			if (!entity.IsSecret)
+			if(!entity.IsSecret)
 				return;
 			_game.Opponent.SecretTriggered(entity, turn);
 			_game.SecretsManager.RemoveSecret(entity);

@@ -3,7 +3,6 @@
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 
 #endregion
 
@@ -18,6 +17,8 @@ namespace Hearthstone_Deck_Tracker.API
 		public static readonly ActionList<Card> OnPlayerPlay = new ActionList<Card>();
 		public static readonly ActionList<Card> OnPlayerHandDiscard = new ActionList<Card>();
 		public static readonly ActionList<Card> OnPlayerMulligan = new ActionList<Card>();
+		public static readonly ActionList OnPlayerMulliganStart = new ActionList();
+		public static readonly ActionList OnPlayerMulliganDone = new ActionList();
 		public static readonly ActionList<Card> OnPlayerDeckDiscard = new ActionList<Card>();
 		public static readonly ActionList<Card> OnPlayerPlayToDeck = new ActionList<Card>();
 		public static readonly ActionList<Card> OnPlayerPlayToHand = new ActionList<Card>();
