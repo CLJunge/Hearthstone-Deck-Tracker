@@ -45,6 +45,7 @@
                                 <Button Name="ButtonSettings"
                                         Content="{Binding Path=Plugin.ButtonText}"
                                         IsEnabled="{Binding Path=IsEnabled}"
+                                        Visibility="{Binding Path=SettingsButtonVisible}"
                                         DockPanel.Dock="Bottom" Click="ButtonSettings_OnClick"/>
                                 <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,15">
                                     <TextBlock Name="TextBlockDescription"

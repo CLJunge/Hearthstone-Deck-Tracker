@@ -1,15 +1,15 @@
 #region
 
+using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Controls.Error;
+using Hearthstone_Deck_Tracker.Utility.Analytics;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using Hearthstone_Deck_Tracker.Annotations;
-using Hearthstone_Deck_Tracker.Controls.Error;
-using Hearthstone_Deck_Tracker.Utility.Analytics;
-using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -44,7 +44,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			get => _menuItem;
 			set
 			{
-				_menuItem = value; 
+				_menuItem = value;
 				OnPropertyChanged();
 			}
 		}
@@ -83,6 +83,11 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 		}
 
+		public Visibility SettingsButtonVisible
+		{
+			get { return string.IsNullOrEmpty(Plugin.ButtonText) ? Visibility.Collapsed : Visibility.Visible; }
+		}
+
 		public bool Load()
 		{
 			if(Plugin == null)
@@ -100,7 +105,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			catch(Exception ex)
 			{
 				ErrorManager.AddError("Error loading Plugin \"" + Name + "\"",
-				                      "Make sure you are using the latest version of the Plugin and HDT.\n\n" + ex);
+									  "Make sure you are using the latest version of the Plugin and HDT.\n\n" + ex);
 				Log.Error(Name + ":\n" + ex);
 				Influx.OnPluginLoadingError(Plugin);
 				return false;
@@ -124,7 +129,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 				if(_exceptions > PluginManager.MaxExceptions)
 				{
 					ErrorManager.AddError(NameAndVersion + " threw too many exceptions, disabled Plugin.",
-					                      "Make sure you are using the latest version of the Plugin and HDT.\n\n" + ex);
+										  "Make sure you are using the latest version of the Plugin and HDT.\n\n" + ex);
 					IsEnabled = false;
 				}
 			}
