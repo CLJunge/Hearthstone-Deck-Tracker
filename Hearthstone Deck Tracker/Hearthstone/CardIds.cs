@@ -123,7 +123,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static class Hunter
 			{
-				public static List<string> All => new List<string> {BearTrap, CatTrick, DartTrap, ExplosiveTrap, FreezingTrap, HiddenCache, Misdirection, PackTactics, PressurePlate, RatTrap, Snipe, SnakeTrap, VenomstrikeTrap, WanderingMonster};
+				public static List<string> All => new List<string> {BearTrap, CatTrick, DartTrap, ExplosiveTrap, FreezingTrap, HiddenCache, Misdirection, OpenTheCages, PackTactics, PressurePlate, RatTrap, Snipe, SnakeTrap, VenomstrikeTrap, WanderingMonster};
 				public static string BearTrap => Collectible.Hunter.BearTrap;
 				public static string CatTrick => Collectible.Hunter.CatTrick;
 				public static string DartTrap => Collectible.Hunter.DartTrap;
@@ -131,6 +131,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string FreezingTrap => Collectible.Hunter.FreezingTrap;
 				public static string HiddenCache => Collectible.Hunter.HiddenCache;
 				public static string Misdirection => Collectible.Hunter.Misdirection;
+				public static string OpenTheCages => Collectible.Hunter.OpenTheCages;
 				public static string PackTactics => Collectible.Hunter.PackTactics;
 				public static string PressurePlate => Collectible.Hunter.PressurePlate;
 				public static string RatTrap => Collectible.Hunter.RatTrap;
@@ -142,7 +143,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static class Mage
 			{
-				public static List<string> All => new List<string> {Counterspell, Duplicate, Effigy, ExplosiveRunes, FlameWard, FrozenClone, IceBarrier, IceBlock, ManaBind, MirrorEntity, NetherwindPortal, PotionOfPolymorph, Spellbender, SplittingImage, Vaporize};
+				public static List<string> All => new List<string> {Counterspell, Duplicate, Effigy, ExplosiveRunes, FlameWard, FrozenClone, IceBarrier, IceBlock, ManaBind, MirrorEntity, NetherwindPortal, PotionOfPolymorph, RiggedFaireGame, Spellbender, SplittingImage, Vaporize};
 				public static string Counterspell => Collectible.Mage.Counterspell;
 				public static string Duplicate => Collectible.Mage.Duplicate;
 				public static string Effigy => Collectible.Mage.Effigy;
@@ -155,6 +156,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string MirrorEntity => Collectible.Mage.MirrorEntity;
 				public static string NetherwindPortal => Collectible.Mage.NetherwindPortal;
 				public static string PotionOfPolymorph => Collectible.Mage.PotionOfPolymorph;
+				public static string RiggedFaireGame => Collectible.Mage.RiggedFaireGame;
 				public static string Spellbender => Collectible.Mage.Spellbender;
 				public static string SplittingImage => Collectible.Mage.SplittingImage;
 				public static string Vaporize => Collectible.Mage.Vaporize;
@@ -162,7 +164,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static class Paladin
 			{
-				public static List<string> All => new List<string> {AutodefenseMatrix, Avenge, CompetitiveSpirit, EyeForAnEye, GetawayKodo, HiddenWisdom, HandOfSalvation, NeverSurrender, NobleSacrifice, Redemption, Repentance, SacredTrial};
+				public static List<string> All => new List<string> {AutodefenseMatrix, Avenge, CompetitiveSpirit, EyeForAnEye, GetawayKodo, HiddenWisdom, HandOfSalvation, NeverSurrender, NobleSacrifice, OhMyYogg, Redemption, Repentance, SacredTrial};
 				public static string AutodefenseMatrix => Collectible.Paladin.AutodefenseMatrix;
 				public static string Avenge => Collectible.Paladin.Avenge;
 				public static string CompetitiveSpirit => Collectible.Paladin.CompetitiveSpirit;
@@ -172,6 +174,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string HiddenWisdom => Collectible.Paladin.HiddenWisdom;
 				public static string NeverSurrender => Collectible.Paladin.NeverSurrender;
 				public static string NobleSacrifice => Collectible.Paladin.NobleSacrifice;
+				public static string OhMyYogg => Collectible.Paladin.OhMyYogg;
 				public static string Redemption => Collectible.Paladin.Redemption;
 				public static string Repentance => Collectible.Paladin.Repentance;
 				public static string SacredTrial => Collectible.Paladin.SacredTrial;
@@ -179,13 +182,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static class Rogue
 			{
-				public static List<string> All => new List<string> {Ambush, Bamboozle, CheatDeath, DirtyTricks, Evasion, Plagiarize, SuddenBetrayal};
+				public static List<string> All => new List<string> {Ambush, Bamboozle, CheatDeath, DirtyTricks, Evasion, Plagiarize, ShadowClone, SuddenBetrayal };
 				public static string Ambush => Collectible.Rogue.Ambush;
 				public static string Bamboozle => Collectible.Rogue.Bamboozle;
 				public static string CheatDeath => Collectible.Rogue.CheatDeath;
 				public static string DirtyTricks => Collectible.Rogue.DirtyTricks;
 				public static string Evasion => Collectible.Rogue.Evasion;
 				public static string Plagiarize => Collectible.Rogue.Plagiarize;
+				public static string ShadowClone => Collectible.Rogue.ShadowClone;
 				public static string SuddenBetrayal => Collectible.Rogue.SuddenBetrayal;
 			}
 		}
